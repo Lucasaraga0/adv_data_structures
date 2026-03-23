@@ -20,7 +20,7 @@ private:
 
     // deletar um no 
 
-    Node<T>* deleteNode(Node<T>* current, T value){
+    Node<T>* deleteNodeRec(Node<T>* current, T value){
 
         if (current == nullptr) return nullptr;
 
@@ -44,19 +44,19 @@ private:
                 return temp;
             }
             // se nos direito e esquerdo nao forem nulo
-            Node<T>* sucessor = findMin(current->min);
+            Node<T>* sucessor = findMinRec(current->min);
             current->data = sucessor->data;
-            current->right = deleteNode(current->right, sucessor->data);
+            current->right = deleteNodeRec(current->right, sucessor->data);
         }
 
         else{
-            current->left = deleteNode(current->left, value);
-            current->right = deleteNode(current->right, value)
+            current->left = deleteNodeRec(current->left, value);
+            current->right = deleteNodeRec(current->right, value)
         }
     }
 
     // retorna minimo da arvore
-    Node<T>* findMin(Node <T>* node){
+    Node<T>* findMinRec(Node <T>* node){
         while (node->left != nullptr) node = node->left;
         return node;
     }
@@ -69,7 +69,7 @@ private:
     }
 
     // percurso em ordem
-    void inOrder(Node<T>* node){
+    void inOrderRec(Node<T>* node){
         if (node != nullptr){
             inorder(node->left);
             cout << node->data << " ";
@@ -77,18 +77,18 @@ private:
         }
     }
 
-    void preOrder(Node<T>* node){
+    void preOrderRec(Node<T>* node){
         if (node != nullptr){
             cout << node->data << " ";
-            preOrder(node->left);
-            preOrder(node->right);
+            preOrderRec(node->left);
+            preOrderRec(node->right);
         }
     }
 
-    void postOrder(Node<T>* node){
+    void postOrderRec(Node<T>* node){
         if (node != nullptr){
-            postOrder(node->left);
-            postOrder(node->right);
+            postOrderRec(node->left);
+            postOrderRec(node->right);
             cout << node->data << " ";
         }
     }
@@ -96,5 +96,54 @@ public:
     BinaryTree() : root(nullptr){}
 
     void insertNode(T value){
+        Node<T>* newNode = new Node<T>(value);
+        
+        // se a arvore ta vazia 
+        if (root == nullptr){
+            root =newNode;
+            return
+        }
+
+        queue<Node<T>*> q;
+        q.push(root);
+
+        while (!q.empty()){
+            Node<T>* current = q.front();
+            q.pop();
+
+            if (current->left == nullptr){
+                current->left = newNode;
+                return
+            }
+            else{
+                q.push(current->left);
+            }
+
+            if(current->right == nullptr){
+                current->right = newNode;
+                return
+            }
+            else{
+                q.push(current->right);
+            }
+        }
+    }
+
+    void deleteNode(T value){
+        root = deleteNodeRec(root, value);
+    }
+
+    void search(T value){
+        return searchRecursive(root, value);
+    }
+
+    void preOder(){
+        preOrderRec(root);
+        cout << endl;
+    }
+
+    void postOder(){
+        postOrderRec(root);
+        cout << endl;
     }
 };
