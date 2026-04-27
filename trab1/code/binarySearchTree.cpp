@@ -59,10 +59,31 @@ Node* minValueNode(Node* node){
     }
     return current;
 }
-Node* getSucessor(Node* node){
-    Node* current = node;
+Node* getSucessor(Node* root, int value){
+    Node* current = root;
     
+    
+    // se o valor passado eh maior que o no atual, procura na arvore direita
+    if (current->value <= value && current->right != nullptr){
+        current = getSucessor(current->right, value);
+    }
+    
+    // se o valor passado for menor que o no atual, procura na chave esquerda
+    else if (current->value > value && current->left != nullptr){
+        current = getSucessor(current->left, value);
+    }
+    
+    
+    if (current-> value < root->value && current->value > value){
+        return current;
+    }
+    else if (current -> value> root->value && root->value > value){
+        return root;
+    }
+
+    return root;
 }
+
 Node* deleteNode(Node* root, int value){
     if (root == nullptr)
         return root;
