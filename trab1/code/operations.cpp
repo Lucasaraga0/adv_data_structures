@@ -1,17 +1,20 @@
-#include "structs.cpp"
+#include "structs.h"
+#include "operations.h"
 #include <iostream>
-const int MAX_VERSIONS = 100;
-const int MAX_MODS = 4; 
 
 Node* ler_ptr(Node* node, std::string campo, int versao){
     Node* result = nullptr;
+    int ult_versao = -1;
 
     for (auto &no : node->mods){
-        if (no.campo == campo && no.versao == versao){
-            if (!result || no.versao >versao) continue;
-            result = no.valor_ptr;
+        if (no.campo == campo && no.versao <= versao){
+            if (no.versao > ult_versao){
+                ult_versao = no.versao;
+                result = no.valor_ptr;
+            }
         }
     }
+    
     if (result) return result;
 
     if (campo == "esq") return node->esq;
@@ -23,7 +26,7 @@ Node* ler_ptr(Node* node, std::string campo, int versao){
 int ler_valor(Node* node, int versao){
     int val = node->valor;
     for (auto &no : node->mods){
-        if (no.campo == "valor" && no.versao <= versao){
+        if (no.campo == "val" && no.versao <= versao){
             val = no.valor_int;
         }
     }
@@ -120,7 +123,7 @@ Node* remove_node(Node* raiz, int x, int versao){
         int succ_val = ler_valor(succ, versao);
 
         Node* new_right = remove_node(dir, succ_val, versao);
-        Node* new_root = write(raiz, "value", nullptr, succ_val, versao);
+        Node* new_root = write(raiz, "val", nullptr, succ_val, versao);
         return write(new_root, "dir", new_right, 0, versao);
     }
 

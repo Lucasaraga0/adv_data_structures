@@ -1,12 +1,9 @@
-#include "structs.cpp"
+#include "structs.h"
 #include <bits/stdc++.h>
-#include "operations.cpp"
+#include "operations.h"
 #include <iostream>
 #include <vector>
 using namespace std;
-
-const int MAX_VERSIONS = 100;
-const int MAX_MODS = 4; 
 
 
 int main(int argc, char* argv[]){

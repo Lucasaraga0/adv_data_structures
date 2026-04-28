@@ -1,26 +1,7 @@
-#include <vector>
-#include <string>
-struct Node;
+#include "structs.h"
 
-struct Mod
-{
-    int versao;
-    std::string campo; // indica qual foi o campo alterado
-    Node* valor_ptr;
-    int valor_int;
-
-    Mod(int v, std::string f, Node* p = nullptr, int i = 0)
+Mod::Mod(int v, std::string f, Node* p, int i)
     : versao(v), campo(f), valor_ptr(p), valor_int(i) {}
-};
 
-struct Node
-{
-    int valor;
-    Node* esq;
-    Node* dir;
-    
-    std::vector<Node*> back_pointers;
-    std::vector<Mod> mods;
-
-    Node(int v): valor(v), esq(nullptr), dir(nullptr) {}
-};
+Node::Node(int v)
+    : valor(v), esq(nullptr), dir(nullptr) {}
