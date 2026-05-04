@@ -3,6 +3,8 @@
 #include <iostream>
 
 Node* ler_ptr(Node* node, std::string campo, int versao){
+    if (!node) return nullptr;
+
     Node* result = nullptr;
     int ult_versao = -1;
 
@@ -24,9 +26,14 @@ Node* ler_ptr(Node* node, std::string campo, int versao){
 }
 
 int ler_valor(Node* node, int versao){
+    if (!node) {
+        std::cerr << "ERRO: node nullptr em ler_valor\n";
+        exit(1);
+    }
+
     int val = node->valor;
     for (auto &no : node->mods){
-        if (no.campo == "val" && no.versao <= versao){
+        if (no.campo == "valor" && no.versao <= versao){
             val = no.valor_int;
         }
     }
@@ -34,6 +41,7 @@ int ler_valor(Node* node, int versao){
 }
 
 Node* write(Node* node, std::string campo, Node* ptr_val, int int_val, int versao){
+    if (!node) return nullptr;
     // se o numero de mods nao estiver cheio 
     if ((int)node->mods.size() < MAX_MODS) {
         node->mods.emplace_back(versao, campo, ptr_val, int_val);
@@ -52,7 +60,7 @@ Node* write(Node* node, std::string campo, Node* ptr_val, int int_val, int versa
     // 
 if (campo == "esq") new_node->esq = ptr_val;
 if (campo == "dir") new_node->dir = ptr_val;
-if (campo == "val") new_node->valor = int_val;
+if (campo == "valor") new_node->valor = int_val;
 
 for (Node* back : node->back_pointers){
     if (ler_ptr(back, "esq", versao) == node){
@@ -123,7 +131,7 @@ Node* remove_node(Node* raiz, int x, int versao){
         int succ_val = ler_valor(succ, versao);
 
         Node* new_right = remove_node(dir, succ_val, versao);
-        Node* new_root = write(raiz, "val", nullptr, succ_val, versao);
+        Node* new_root = write(raiz, "valor", nullptr, succ_val, versao);
         return write(new_root, "dir", new_right, 0, versao);
     }
 

@@ -15,6 +15,7 @@ int main(int argc, char* argv[]){
     string op;
     
     Node* raizes[MAX_VERSIONS];
+    raizes[0] = nullptr;
     int versao_atual = 0;   
     
     while (file >> op){
@@ -35,7 +36,7 @@ int main(int argc, char* argv[]){
                 versao = versao_atual;
             }
 
-            cout << "SUC" << x << " " << versao << "\n";
+            cout << "SUC " << x << " " << versao << "\n";
             int suc = sucessor(raizes[versao], x, versao);
             if (suc == INT_MAX){
                 cout << "inf" << "\n"; 
