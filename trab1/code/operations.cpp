@@ -58,19 +58,19 @@ Node* write(Node* node, std::string campo, Node* ptr_val, int int_val, int versa
     if (new_node->dir) new_node->dir->back_pointers.push_back(new_node);
     
     // 
-if (campo == "esq") new_node->esq = ptr_val;
-if (campo == "dir") new_node->dir = ptr_val;
-if (campo == "valor") new_node->valor = int_val;
+    if (campo == "esq") new_node->esq = ptr_val;
+    if (campo == "dir") new_node->dir = ptr_val;
+    if (campo == "valor") new_node->valor = int_val;
 
-for (Node* back : node->back_pointers){
-    if (ler_ptr(back, "esq", versao) == node){
-        write(back, "esq", new_node, 0, versao);
+    for (Node* back : node->back_pointers){
+        if (ler_ptr(back, "esq", versao) == node){
+            write(back, "esq", new_node, 0, versao);
+        }
+        
+        if (ler_ptr(back, "dir", versao) == node){
+            write(back, "dir", new_node, 0, versao);
+        }    
     }
-    
-    if (ler_ptr(back, "dir", versao) == node){
-        write(back, "dir", new_node, 0, versao);
-    }    
-}
     return new_node;
 }
 
@@ -134,7 +134,6 @@ Node* remove_node(Node* raiz, int x, int versao){
         Node* new_root = write(raiz, "valor", nullptr, succ_val, versao);
         return write(new_root, "dir", new_right, 0, versao);
     }
-
 }
 
 int sucessor(Node* raiz, int x, int versao){
