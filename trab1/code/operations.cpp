@@ -151,9 +151,9 @@ int sucessor(Node* raiz, int x, int versao){
     return succ;
 }
 
-void inorder(Node* node, int versao, int depth) {
+void inorder(Node* node, int versao, int profundidade) {
     if (!node) return;
-    inorder(ler_ptr(node, "esq", versao), versao, depth + 1);
-    std::cout << ler_valor(node, versao) << "," << depth << " ";
-    inorder(ler_ptr(node, "dir", versao), versao, depth + 1);
+    inorder(ler_ptr(node, "esq", versao), versao, profundidade + 1);
+    std::cout << ler_valor(node, versao) << "," << profundidade << " ";
+    inorder(ler_ptr(node, "dir", versao), versao, profundidade + 1);
 }
