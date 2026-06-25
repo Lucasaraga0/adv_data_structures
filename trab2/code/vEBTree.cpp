@@ -1,12 +1,10 @@
 #include "vEBTree.hpp"
 #include <cmath>
 
-// ---------- Funcoes auxiliares de bits ----------
+// Funcoes auxiliares
 
 // upperSqrt(u) = 2^(ceil(lgu/2))
 uint64_t VEBTree::upperSqrt() const {
-    // u eh sempre potencia de 2 (2,4,8,16,...,2^32)
-    // lg(u) eh par ou impar; upperSqrt = 2^ceil(lg(u)/2)
     uint64_t lgu = 0;
     uint64_t tmp = u;
     while (tmp > 1) { tmp >>= 1; lgu++; }
@@ -31,7 +29,7 @@ uint64_t VEBTree::indexOf(uint64_t h, uint64_t l) const {
     return h * lowerSqrt() + l;
 }
 
-// ---------- Construtor / Destrutor ----------
+// Construtor / Destrutor 
 
 VEBTree::VEBTree(uint64_t universeSize)
     : u(universeSize), min(VEB_EMPTY), max(VEB_EMPTY), summary(nullptr) {
@@ -42,7 +40,7 @@ VEBTree::~VEBTree() {
     delete summary;
 }
 
-// ---------- Consultas basicas ----------
+//  Consultas 
 
 bool VEBTree::isEmpty() const {
     return min == VEB_EMPTY;
@@ -65,7 +63,7 @@ VEBTree* VEBTree::getOrCreateCluster(uint64_t i) {
     return c;
 }
 
-// ---------- member ----------
+//  member 
 
 bool VEBTree::member(uint64_t x) const {
     if (x == min || x == max) return true;
@@ -76,7 +74,7 @@ bool VEBTree::member(uint64_t x) const {
     return c->member(low(x));
 }
 
-// ---------- insert ----------
+//  insert 
 
 void VEBTree::insert(uint64_t x) {
     if (isEmpty()) {
@@ -114,7 +112,7 @@ void VEBTree::insert(uint64_t x) {
     if (x > max) max = x;
 }
 
-// ---------- remove ----------
+// remove 
 
 void VEBTree::remove(uint64_t x) {
     if (isEmpty()) return;
@@ -192,7 +190,7 @@ void VEBTree::remove(uint64_t x) {
     }
 }
 
-// ---------- successor ----------
+// successor 
 
 uint64_t VEBTree::successor(uint64_t x) const {
     if (u == 2) {
@@ -226,7 +224,7 @@ uint64_t VEBTree::successor(uint64_t x) const {
     return indexOf(succCluster, offset);
 }
 
-// ---------- predecessor ----------
+// predecessor 
 
 uint64_t VEBTree::predecessor(uint64_t x) const {
     if (u == 2) {

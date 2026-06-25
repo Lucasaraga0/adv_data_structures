@@ -9,7 +9,7 @@ const uint64_t VEB_EMPTY = UINT64_MAX;
 
 class VEBTree {
 private:
-    uint64_t u;        // tamanho do universo deste nivel
+    uint64_t u;  // tamanho do universo deste nivel
     uint64_t min;
     uint64_t max;
     VEBTree* summary;  // subarvore de resumo (tamanho sqrt(u))

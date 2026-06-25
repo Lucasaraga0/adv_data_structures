@@ -91,10 +91,10 @@ void HashTable::remove(uint64_t key) {
             } else {
                 prev->next = cur->next;
             }
-            delete cur; // NAO deleta o value aqui; quem chama controla a subarvore
+            delete cur; 
             numElements--;
 
-            // Table halving: fator de carga < 0.25, mas nunca abaixo do tamanho inicial
+            // Table halving: fator de carga < 0.25
             if (table.size() > INITIAL_SIZE && numElements < table.size() / 4) {
                 size_t newSize = table.size() / 2;
                 if (newSize < INITIAL_SIZE) newSize = INITIAL_SIZE;
